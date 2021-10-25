@@ -32,11 +32,12 @@ const Home = (): JSX.Element => {
 
   useEffect(() => {
     async function loadProducts() {
-      const response = await api.get('/products'); //pegando os meus produtos
-      const productsListed = response.data.map(function(product: Product) {
-        return{ ...product, price: formatPrice(product.price)}
+      const response = await api.get('/products');
+      const productsFormated = response.data.map(function(product: Product){
+        return {...product, price: formatPrice(product.price)}
       })
-      setProducts(productsListed);
+      setProducts(productsFormated)
+      
     }
 
     loadProducts();
@@ -48,9 +49,9 @@ const Home = (): JSX.Element => {
 
   return (
     <ProductList>
-      {products.map(product => (
+      {products.map((product) => (
         <li key={product.id}>
-        <img src={product.image} alt={product.title}/>
+        <img src={product.image} alt={product.title} />
         <strong>{product.title}</strong>
         <span>{product.price}</span>
         <button
@@ -60,7 +61,7 @@ const Home = (): JSX.Element => {
         >
           <div data-testid="cart-product-quantity">
             <MdAddShoppingCart size={16} color="#FFF" />
-            {cartItemsAmount[product.id] || 0} 
+            {cartItemsAmount[product.id] || 0}
           </div>
 
           <span>ADICIONAR AO CARRINHO</span>
